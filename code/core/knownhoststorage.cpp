@@ -52,7 +52,7 @@ namespace
 				dynamic_cast<xmlpp::Element*>(*iter);
 			if(child == NULL) continue;
 
-			xmlpp::TextNode* text = child->get_child_text();
+			xmlpp::TextNode* text = child->get_first_child_text();
 			if(text == NULL) continue;
 
 			if(child->get_name() == "name")
@@ -228,18 +228,18 @@ Gobby::KnownHostStorage::~KnownHostStorage()
 				INF_GTK_BROWSER_MODEL_COL_NAME, &name,
 				-1);
 
-			xmlpp::Element* child = root->add_child("host");
+			xmlpp::Element* child = root->add_child_element("host");
 			xmlpp::Element* name_elem =
-				child->add_child("name");
-			name_elem->set_child_text(name);
+				child->add_child_element("name");
+			name_elem->set_first_child_text(name);
 			
 			xmlpp::Element* hostname_elem =
-				child->add_child("hostname");
-			hostname_elem->set_child_text(hostname);
+				child->add_child_element("hostname");
+			hostname_elem->set_first_child_text(hostname);
 
 			xmlpp::Element* service_elem =
-				child->add_child("service");
-			service_elem->set_child_text(service);
+				child->add_child_element("service");
+			service_elem->set_first_child_text(service);
 
 			g_object_unref(resolver);
 		}

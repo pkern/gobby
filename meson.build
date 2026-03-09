@@ -1,7 +1,7 @@
 project('gobby', ['cpp', 'c'],
   version : '0.7.0',
   license : 'ISC',
-  default_options : ['cpp_std=c++11'])
+  default_options : ['cpp_std=c++17'])
 appname = 'gobby-0.5'
 
 ## TODO: WIN32 (+resources), make docs conditional
@@ -17,7 +17,7 @@ if target_machine.system() == 'windows'
   subdir('win32')
 endif
 
-libxmlpp_dep = dependency('libxml++-2.6')
+libxmlpp_dep = dependency('libxml++-5.0')
 sigcpp_dep = dependency('sigc++-2.0')
 glibmm_dep = dependency('glibmm-2.4', version : '>= 2.39.93')
 giomm_dep = dependency('giomm-2.4', version : '>= 2.39.93')

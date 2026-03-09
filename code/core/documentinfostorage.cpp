@@ -65,7 +65,7 @@ namespace
 				dynamic_cast<xmlpp::Element*>(*iter);
 			if(child == NULL) continue;
 
-			xmlpp::TextNode* text = child->get_child_text();
+			xmlpp::TextNode* text = child->get_first_child_text();
 			if(text == NULL) continue;
 
 			if(child->get_name() == "root")
@@ -162,22 +162,22 @@ Gobby::DocumentInfoStorage::~DocumentInfoStorage()
 		for(InfoMap::iterator iter = m_infos.begin();
 		    iter != m_infos.end(); ++ iter)
 		{
-			xmlpp::Element* child = root->add_child("document");
+			xmlpp::Element* child = root->add_child_element("document");
 
-			xmlpp::Element* root_child = child->add_child("root");
-			root_child->set_child_text(iter->first);
+			xmlpp::Element* root_child = child->add_child_element("root");
+			root_child->set_first_child_text(iter->first);
 
-			xmlpp::Element* uri_child = child->add_child("uri");
-			uri_child->set_child_text(iter->second.uri);
+			xmlpp::Element* uri_child = child->add_child_element("uri");
+			uri_child->set_first_child_text(iter->second.uri);
 
 			xmlpp::Element* eol_style_child =
-				child->add_child("eol-style");
-			eol_style_child->set_child_text(
+				child->add_child_element("eol-style");
+			eol_style_child->set_first_child_text(
 				eol_style_to_text(iter->second.eol_style));
 
 			xmlpp::Element* encoding_child =
-				child->add_child("encoding");
-			encoding_child->set_child_text(iter->second.encoding);
+				child->add_child_element("encoding");
+			encoding_child->set_first_child_text(iter->second.encoding);
 		}
 
 		document.write_to_file_formatted(filename());

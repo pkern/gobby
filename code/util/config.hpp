@@ -349,14 +349,14 @@ Config::TypedValueEntry<DataType>::
 
 template<typename DataType>
 Config::TypedValueEntry<DataType>::TypedValueEntry(const xmlpp::Element& elem):
-	ValueEntry(elem.get_name(), elem.get_child_text()->get_content() )
+	ValueEntry(elem.get_name(), elem.get_first_child_text()->get_content() )
 {
 }
 
 template<typename DataType>
 void Config::TypedValueEntry<DataType>::save(xmlpp::Element& elem) const
 {
-	elem.set_child_text(m_data.serialized() );
+	elem.set_first_child_text(m_data.serialized() );
 }
 
 template<typename BaseIterator, typename Entry>

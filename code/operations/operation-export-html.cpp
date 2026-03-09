@@ -122,7 +122,7 @@ namespace
 		tags.clear();
 		line_counter = 1;
 		xmlpp::Element* last_node = content;
-		xmlpp::Element* line_no = last_node->add_child("span");
+		xmlpp::Element* line_no = last_node->add_child_element("span");
 		line_no->set_attribute("class", "line_no");
 		line_no->set_attribute("id", "line_1");
 
@@ -153,7 +153,7 @@ namespace
 			Glib::ustring classes = get_current_tags(tags, &begin);
 			if(!classes.empty())
 			{
-				last_node = last_node->add_child("span");
+				last_node = last_node->add_child_element("span");
 				last_node->set_attribute("class", classes);
 
 				// add mouseover "written by" popup
@@ -199,7 +199,7 @@ namespace
 						              next_pos));
 					last_pos = next_pos;
 
-					line_no = last_node->add_child("span");
+					line_no = last_node->add_child_element("span");
 					line_no->set_attribute("class",
 					                       "line_no");
 					line_no->set_attribute(
@@ -263,7 +263,7 @@ namespace
 			uprintf(Glib::ustring(translated, p).c_str(),
 			        hostname, path, time_str));
 
-		xmlpp::Element* link = node->add_child("a");
+		xmlpp::Element* link = node->add_child_element("a");
 		link->set_attribute("href", "http://gobby.github.io/");
 		link->add_child_text(PACKAGE_STRING);
 
@@ -294,7 +294,7 @@ namespace
 			const char* name = inf_user_get_name(INF_USER(*i));
 			const unsigned int rgb = rgba_to_rgb24(rgba.gobj());
 
-			xmlpp::Element* item = list->add_child("li");
+			xmlpp::Element* item = list->add_child_element("li");
 			item->add_child_text(name);
 			item->set_attribute(
 				"style",
@@ -377,16 +377,16 @@ namespace
 			* root      = output.create_root_node(
 					"html",
 					"http://www.w3.org/1999/xhtml"),
-			* head      = root->add_child("head"),
-			* body      = root->add_child("body"),
-			* title     = head->add_child("title"),
-			* style     = head->add_child("style"),
-			* h1        = body->add_child("h1"),
-			* h2        = body->add_child("h2"),
-			* user_list = body->add_child("ul"),
-			* content   = body->add_child("pre"),
-			* info      = body->add_child("p"),
-			* icon      = h1->add_child("img");
+			* head      = root->add_child_element("head"),
+			* body      = root->add_child_element("body"),
+			* title     = head->add_child_element("title"),
+			* style     = head->add_child_element("style"),
+			* h1        = body->add_child_element("h1"),
+			* h2        = body->add_child_element("h2"),
+			* user_list = body->add_child_element("ul"),
+			* content   = body->add_child_element("pre"),
+			* info      = body->add_child_element("p"),
+			* icon      = h1->add_child_element("img");
 
 		icon->set_attribute("src",    gobby_icon);
 		icon->set_attribute("width",  "48");
@@ -416,8 +416,8 @@ namespace
 		dump_tags_style(style, tags);
 		if(!user_list->cobj()->children)
 		{
-			body->remove_child(h2);
-			body->remove_child(user_list);
+			xmlpp::Node::remove_node(h2);
+			xmlpp::Node::remove_node(user_list);
 		}
 
 		style->add_child_text(

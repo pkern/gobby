@@ -56,16 +56,16 @@ Gobby::Config::ParentEntry::ParentEntry(const Glib::ustring& name):
 Gobby::Config::ParentEntry::ParentEntry(const xmlpp::Element& elem):
 	Entry(elem.get_name() )
 {
-	xmlpp::Node::NodeList list = elem.get_children();
-	for(xmlpp::Node::NodeList::iterator iter = list.begin();
+	xmlpp::Node::const_NodeList list = elem.get_children();
+	for(xmlpp::Node::const_NodeList::iterator iter = list.begin();
 	    iter != list.end();
 	    ++ iter)
 	{
-		xmlpp::Element* child = dynamic_cast<xmlpp::Element*>(*iter);
+		const xmlpp::Element* child = dynamic_cast<const xmlpp::Element*>(*iter);
 		if(child == NULL) continue;
 
-		if(child->get_child_text() &&
-		   !child->get_child_text()->is_white_space())
+		if(child->get_first_child_text() &&
+		   !child->get_first_child_text()->is_white_space())
 		{
 			ValueEntry* entry = new TypedValueEntry<Glib::ustring>(
 				*child
@@ -97,7 +97,7 @@ void Gobby::Config::ParentEntry::save(xmlpp::Element& elem) const
 	    ++ iter)
 	{
 		Entry* entry = iter->second;
-		xmlpp::Element* child = elem.add_child(entry->get_name() );
+		xmlpp::Element* child = elem.add_child_element(entry->get_name() );
 		entry->save(*child);
 	}
 }
